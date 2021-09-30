@@ -52,7 +52,7 @@ def index():
         {
             'question': (
                 'Tengo una función g que recibe una lista x de 4 elementos. '
-                'Incrementa en uno el valor de x[2] y se lo reasigna internamente. '
+                'Lo único que hace internamente es x[2] += 1. '
                 'Si yo le paso la lista L = [1, 3, 5, 7], ¿cuánto vale L[2] tras llamar a g?'
             ),
             'answers': [1, 2, 3, 4, 5, 6, 7, 8, 9],
