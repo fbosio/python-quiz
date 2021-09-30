@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, request
 from werkzeug.exceptions import BadRequestKeyError
 
@@ -13,6 +15,7 @@ def wrong_value(key, value):
     return bad_request(
         f'El valor de la clave "{key}" es incorrecto ("{value}")'
     )
+
 
 # Aplicación
 app = Flask('python-quiz')
@@ -95,7 +98,7 @@ def index():
                 'mauro.golpear(100, samid)',
                 'samid.golpear(100, mauro)'
             ],
-            'correct_index': 3,
+            'correct_index': 2,
         },
         {
             'question': (
