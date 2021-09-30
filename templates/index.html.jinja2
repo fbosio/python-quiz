@@ -1,0 +1,90 @@
+<!-- MVP.css quickstart template: https://github.com/andybrewer/mvp/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mvp.css') }}">
+
+    <meta charset="utf-8">
+    <meta name="description" content="Examen de Python">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Examen de Python</title>
+</head>
+
+<body>
+    <header>
+        <h1>Examen de Python</h1>
+    </header>
+    <main>
+        <section>
+            {% if error %}
+                <header>
+                    <h2>Error</h2>
+                    <p>{{ message }}</p>
+                    <p>
+                        <a href="{{ url_for('index') }}">Regresar</a>
+                    </p>
+                </header>
+            {% elif answering %}
+                <form>
+                    {% for item in items %}
+                        {% set index = loop.index0 %}
+                        <label for="answer{{ index }}">{{ item['question'] | e }}</label>
+                        {% for answer in item['answers'] %}
+                            {% set radio_id = 'answer' ~ index ~ '-choice' ~ loop.index0 %}
+                            {% set escaped_answer = answer|e %}
+                            <input type="radio" name="answer{{ index }}" required id="{{ radio_id }}" value="{{ loop.index0 }}">
+                            <label for="{{ radio_id }}">{{ answer|e }}</label>
+                        {% endfor %}
+                    {% endfor %}
+                    <br>
+                    <button type="submit">Terminé, profe. ¡Deme la nota!</button>
+                </form>
+            {% else %}
+                <header>
+                    <h2>Resultados</h2>
+                    <p>
+                        {{ hits }}
+                        correcta
+                        {%- if hits > 1 -%}
+                            s
+                        {%- endif %}
+                        de {{ total }} en total:
+                        {{ '{:.2f}'.format(hits / total * 100) }}% de aciertos
+                    </p>
+                </header>
+                <ol>
+                    {% for item in items %}
+                        <li>
+                            {{ item['question'] }}
+                            <ul>
+                                <li>
+                                    {{ item['chosen'] }}
+                                    {% if item['chosen'] == item['correct'] %}
+                                         ✔
+                                    {% else %}
+                                        ✘
+                                        La respuesta correcta es <strong>{{ item['correct'] }}</strong>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+    </main>
+    <footer>
+        <hr>
+        <p>
+            <small>
+                Fede Bosio, 2021.
+                Hecho con <a href="https://andybrewer.github.io/mvp/">MVP ↗</a>
+            </small>
+        </p>
+    </footer>
+</body>
+
+</html>
